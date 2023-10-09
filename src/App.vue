@@ -82,12 +82,12 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+   
   },
   data() {
     return {
@@ -800,7 +800,7 @@ display: none;
   }
   .box-info{
     width: 150px;
-    height: 150px;
+    height: 1500px;
   }
   #calendar1, .calendar-container{
    
