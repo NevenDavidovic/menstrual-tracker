@@ -10,7 +10,7 @@
       <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() === 1">Day 1</p>
       <p class="day-of-month" id="day-of-month" v-else>Day {{ getDaysPassed() }}</p>
 
-      <button class="log-period" id="log-p" @click="openModalPeriod">
+      <button class="log-period" id="log-p"  v-on:click="openModalPeriod">
         Log Period
       </button>
     </div>
@@ -140,27 +140,27 @@ export default {
 
   methods: {
 
-    showPreviousMonth(){
-      const chevronFront=document.getElementById("chevronFront");
-      const currentMonth=document.getElementById("current-month");
-      const nextMonth=document.getElementById("next-month");
-      const chevronBack=document.getElementById("chevronBack")
-      const containerNextMonth=document.getElementById("calendar1");
-      const containerCurrentMonth=document.getElementById("calendar");
+      showPreviousMonth(){
+        const chevronFront=document.getElementById("chevronFront");
+        const currentMonth=document.getElementById("current-month");
+        const nextMonth=document.getElementById("next-month");
+        const chevronBack=document.getElementById("chevronBack")
+        const containerNextMonth=document.getElementById("calendar1");
+        const containerCurrentMonth=document.getElementById("calendar");
 
-      chevronBack.addEventListener("click",()=>{
+       
 
-        chevronFront.style.display="block";
-        currentMonth.style.display="grid";
-        nextMonth.style.display="none";
-        chevronBack.style.display="none";
-        containerCurrentMonth.style.display="grid";
-        containerNextMonth.style.display="none"
+          chevronFront.style.display="block";
+          currentMonth.style.display="grid";
+          nextMonth.style.display="none";
+          chevronBack.style.display="none";
+          containerCurrentMonth.style.display="grid";
+          containerNextMonth.style.display="none"
 
-      })
+        
 
 
-    },
+      },
 
     showNextMonth(){
       const chevronFront=document.getElementById("chevronFront");
@@ -170,14 +170,14 @@ export default {
       const containerNextMonth=document.getElementById("calendar1");
       const containerCurrentMonth=document.getElementById("calendar");
 
-      chevronFront.addEventListener("click",()=>{
+      
         chevronFront.style.display="none";
         currentMonth.style.display="none";
         nextMonth.style.display="flex";
         chevronBack.style.display="block";
         containerCurrentMonth.style.display="none";
         containerNextMonth.style.display="grid"
-      })
+      
 
     },
 
@@ -203,10 +203,10 @@ return formattedDate;
       const infoMenstruation=document.getElementsByClassName("menstruation-data-info")[0];
       const imageOpenInfo=document.getElementById("btnOpenM")
 //backArrowM
-      imageOpenInfo.addEventListener("click",()=>{
+      
         infoMenstruation.style.display="block";
         imageOpenInfo.style.display="none"
-      })
+      
 
 
     },
@@ -217,10 +217,10 @@ closeMenstruationInfo(){
       const arrowBackM=document.getElementById("backArrowM");
 
 
-arrowBackM.addEventListener("click",()=>{
+
   infoMenstruation.style.display="none";
   imageOpenInfo.style.display="block";
-})
+
 
 
 
@@ -234,10 +234,10 @@ arrowBackM.addEventListener("click",()=>{
       const btnIconOvulationOpen=document.getElementById("btnOvulationOpen");
       const getInfoOvulation=document.getElementsByClassName("general-ovulation-info")[0];
 
-    btnIconOvulationOpen.addEventListener("click",()=>{
+    
       getInfoOvulation.style.display="block";
       btnIconOvulationOpen.style.display="none";
-    })
+    
 
 
 
@@ -252,13 +252,13 @@ arrowBackM.addEventListener("click",()=>{
   const btnIconOvulationOpen=document.getElementById("btnOvulationOpen");
   const getInfoOvulation=document.getElementsByClassName("general-ovulation-info")[0];
   
-  closeOvulation.addEventListener("click", ()=>{
+ 
     getInfoOvulation.style.display="none";
     btnIconOvulationOpen.style.display="flex";
     
 
 
-  })
+  
 
 },
 
@@ -413,18 +413,17 @@ arrowBackM.addEventListener("click",()=>{
     openModalPeriod() {
       const modalInput = document.getElementById("myModal");
       const logPeriod = document.getElementById("log-p");
-      logPeriod.addEventListener("click", function () {
+      
         modalInput.style.display = "block";
-      });
+      
     },
 
     closeModalPeriod() {
       const modalInput = document.getElementById("myModal");
 
-      const closeModal = document.getElementsByClassName("close")[0];
-      closeModal.addEventListener("click", function () {
+      
         modalInput.style.display = "none";
-      });
+      
     },
 
     getCalendarDays() {
