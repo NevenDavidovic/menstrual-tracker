@@ -527,6 +527,7 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
   text-align: center;
   height: fit-content;
   min-height: 220px;
+  width: 60%;
 }
 
 .day-of-month {
