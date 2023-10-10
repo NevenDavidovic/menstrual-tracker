@@ -6,9 +6,9 @@
 
     <div class="calendar-container" id="calendar1"></div>
     <div class="center-circle">
-      
+      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">Enter Date</p>
       <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() === 1">Day 1</p>
-      <p class="day-of-month" id="day-of-month" v-else>Day {{ getDaysPassed() }}</p>
+      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed()<50">Day {{ getDaysPassed() }}</p>
 
       <button class="log-period" id="log-p"  v-on:click="openModalPeriod">
         Log Period
@@ -17,7 +17,12 @@
     <div class="information-boxes">
       <div class="information-menstruation box-info">
         <h3>Period Length</h3>
-        <p>{{ getLastPeriodDay() }} days</p>
+        <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">--</p>
+        <p v-else>{{ getLastPeriodDay() }} days</p>
+        <br> <hr>
+        <b>Next menstruation:</b> <br /><span class="dateForPeriod">{{
+            dateForPeriodValue
+          }}</span>
       </div>
       <div class="statistics box-info">
 
@@ -69,12 +74,14 @@
         id="datepicker"
         class="date-of-period"
         v-model="thePeriodDay"
+required
       />
       <input
         type="number"
         id="datepicker"
         class="number-of days"
         v-model="numberOfDays"
+        required
       />
       <button id="saveButton" @click="savePeriod" class="saveBtn">Save</button>
     </div>
@@ -274,8 +281,11 @@ closeMenstruationInfo(){
       }
       let datumMenge = this.getLastPeriod();
       const startDate = datumMenge; // Change this to your specific start date
-      const daysPassed = daysPassedSince(startDate);
-      return daysPassed - 1;
+      let daysPassed = daysPassedSince(startDate);
+
+      
+
+      return daysPassed ;
     },
 
     displayPeriodInfo() {
@@ -475,6 +485,7 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
+  overflow: hidden;
 }
 
 .container-layout {
@@ -533,14 +544,14 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
 .day-of-month {
   font-size: 70px;
   font-weight: 700;
-  color: orangered;
+  color: #fb627e;
   margin-bottom: 10px;
 }
 #calendar1,.calendar-container {
   max-width: 1440px;
   display: grid;
   grid-template-columns: repeat(7,1fr);
-  
+  width: 60%;
   justify-content: center;
   gap: 10px;
   margin: auto;
@@ -573,10 +584,10 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
 .log-period {
   background-color: transparent;
   box-shadow: none;
-  border: 2px solid orangered;
+  border: 2px solid #fb627e;
   padding: 10px 20px;
   border-radius: 20px;
-  color: orangered;
+  color: #fb627e;
   font-weight: 700;
   cursor: pointer;
 }
@@ -753,10 +764,19 @@ display: none;
   .day-of-month{
     font-size: 32px;
   }
-}
-@media(max-width:700px){
   .information-boxes{
     grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:600px){
+  #calendar1, .calendar-container{
+    width: 100%;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .container-layout{
+    gap:0;
   }
 }
 
@@ -784,6 +804,7 @@ display: none;
   #calendar1, .calendar-container{
     gap:0px;
   border-radius: 0;  
+ 
   
   }
   .center-circle{
@@ -807,6 +828,17 @@ display: none;
   grid-template-columns: repeat(6,1fr);  
     
   }
+}
+
+.dateForPeriod{
+  font-size: 32px;
+}
+.information-menstruation p{
+  margin: 0;
+}
+
+.information-menstruation h3{
+  margin: 0;
 }
 
 </style>
