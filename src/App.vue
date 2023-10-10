@@ -31,17 +31,15 @@
         <div class="menstruation-data-info"><p>
           <img :src="require('@/assets/img/backArrow.png')" alt="" class="back-arrow" id="backArrowM" @click="closeMenstruationInfo">
           <br>
-          <b>Date of next menstruation:</b> <br /><span class="dateForPeriod">{{
-            dateForPeriodValue
-          }}</span>
+          
         </p>
         <p><b>Last Menstruations</b> </p>
         <p><ul class="spremljene-menstruacije">
           <li v-for="period in arrayOfPeriods" :key="period[0]">
-            {{ period[0] }}
+            {{ formatDate(period[0]) }}
           </li>
         </ul></p></div>
-
+        
 
         
       </div>
@@ -146,6 +144,11 @@ export default {
   },
 
   methods: {
+
+    formatDate(dateString) {
+      const [year, month, day] = dateString.split('-');
+      return `${day}.${month}.${year}`;
+    },
 
       showPreviousMonth(){
         const chevronFront=document.getElementById("chevronFront");
