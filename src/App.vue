@@ -6,7 +6,7 @@
 
     <div class="calendar-container" id="calendar1"></div>
     <div class="center-circle">
-      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">Enter Date</p>
+      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">--</p>
       <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() === 1">Day 1</p>
       <p class="day-of-month" id="day-of-month" v-if="getDaysPassed()<50">Day {{ getDaysPassed() }}</p>
 
