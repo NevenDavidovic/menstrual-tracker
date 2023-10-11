@@ -378,8 +378,17 @@ closeMenstruationInfo(){
     },
 
     savePeriod() {
+
       const periodInfo = [this.thePeriodDay, this.numberOfDays];
-      console.log(this.thePeriodDay, this.numberOfDays);
+      console.log("date",this.thePeriodDay);
+      console.log( "smth",this.numberOfDays);
+
+      if(this.thePeriodDay== "" ||this.numberOfDays== "" ){
+        alert("Error! You did not enter complete period info!");
+        return;
+      }
+
+      
       this.fertileDaysArray = [];
       let arrayOfPeriods = JSON.parse(localStorage.getItem("arrayOfPeriods"));
       if (arrayOfPeriods == null) {
