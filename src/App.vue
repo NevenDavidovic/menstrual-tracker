@@ -46,10 +46,9 @@
           --
         </p>
         <p v-else>{{ getLastPeriodDay() }} days</p>
-        <hr />
+
         <b><h3>Next menstruation:</h3></b>
         <span class="dateForPeriod">{{ dateForPeriodValue }}</span>
-        <hr />
       </div>
       <div class="statistics box-info">
         <img
@@ -882,14 +881,22 @@ export default {
 .information-menstruation p {
   margin: 0;
 }
-
+.information-menstruation {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 1em;
+}
 .information-menstruation h3 {
   margin: 0;
 }
 
 .trashicon {
   width: 30px;
-  height: 30px;
+  height: 28px;
   cursor: pointer;
 }
 .spremljene-menstruacije {
