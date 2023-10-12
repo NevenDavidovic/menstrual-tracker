@@ -1,65 +1,123 @@
 <template>
   <div class="container-layout">
-    <div class="current-month-title"> <img :src="require('@/assets/img/chevronBack.png') " alt="" class="chevronBack" id="chevronBack" @click="showPreviousMonth"> <p class="current-month" id="current-month">{{ currentMonth }}</p> <p class="next-month" id="next-month">{{ nextMonth }}</p> <img :src="require('@/assets/img/chevronFron.png')" alt="" id="chevronFront"  @click="showNextMonth"></div>
-    <div class="calendar-container" id="calendar">
-      </div>
+    <div class="current-month-title">
+      <img
+        :src="require('@/assets/img/chevronBack.png')"
+        alt=""
+        class="chevronBack"
+        id="chevronBack"
+        @click="showPreviousMonth"
+      />
+      <p class="current-month" id="current-month">{{ currentMonth }}</p>
+      <p class="next-month" id="next-month">{{ nextMonth }}</p>
+      <img
+        :src="require('@/assets/img/chevronFron.png')"
+        alt=""
+        id="chevronFront"
+        @click="showNextMonth"
+      />
+    </div>
+    <div class="calendar-container" id="calendar"></div>
 
     <div class="calendar-container" id="calendar1"></div>
     <div class="center-circle">
-      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">--</p>
-      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() === 1">Day 1</p>
-      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed()<50">Day {{ getDaysPassed() }}</p>
+      <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() === 1">
+        Day 1
+      </p>
+      <p
+        class="day-of-month"
+        id="day-of-month"
+        v-else-if="getDaysPassed() > 50"
+      >
+        --
+      </p>
+      <p class="day-of-month" id="day-of-month" v-else>
+        Day {{ getDaysPassed() }}
+      </p>
 
-      <button class="log-period" id="log-p"  v-on:click="openModalPeriod">
+      <button class="log-period" id="log-p" v-on:click="openModalPeriod">
         Log Period
       </button>
     </div>
     <div class="information-boxes">
       <div class="information-menstruation box-info">
         <h3>Period Length</h3>
-        <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">--</p>
+        <p class="day-of-month" id="day-of-month" v-if="getDaysPassed() > 50">
+          --
+        </p>
         <p v-else>{{ getLastPeriodDay() }} days</p>
-        <br> <hr>
-        <b>Next menstruation:</b> <br /><span class="dateForPeriod">{{
-            dateForPeriodValue
-          }}</span>
+        <hr />
+        <b><h3>Next menstruation:</h3></b>
+        <span class="dateForPeriod">{{ dateForPeriodValue }}</span>
+        <hr />
       </div>
       <div class="statistics box-info">
-
-        <img :src="require('@/assets/img/menstruation-data.png')" alt="" class="ovulation-image" id="btnOpenM"  @click="openMenstruationInfo">
+        <img
+          :src="require('@/assets/img/menstruation-data.png')"
+          alt=""
+          class="ovulation-image"
+          id="btnOpenM"
+          @click="openMenstruationInfo"
+        />
         <h3>Menstruations</h3>
-        <div class="menstruation-data-info"><p>
-          <img :src="require('@/assets/img/backArrow.png')" alt="" class="back-arrow" id="backArrowM" @click="closeMenstruationInfo">
-          <br>
-          
-        </p>
-        <p><b>Last Menstruations</b> </p>
-        <p><ul class="spremljene-menstruacije">
-          <li v-for="period in arrayOfPeriods" :key="period[0]">
-            {{ formatDate(period[0]) }}
-          </li>
-        </ul></p></div>
-        
+        <div class="menstruation-data-info">
+          <p>
+            <img
+              :src="require('@/assets/img/backArrow.png')"
+              alt=""
+              class="back-arrow"
+              id="backArrowM"
+              @click="closeMenstruationInfo"
+            />
+            <br />
+          </p>
+          <p><b>Last Menstruations</b></p>
+          <div
+            v-for="(period, index) in arrayOfPeriods"
+            :key="index"
+            class="spremljene-menstruacije"
+          >
+            <p>{{ formatDate(period[0]) }}</p>
 
-        
+            <img
+              :src="require('@/assets/img/trash-icon.png')"
+              alt=""
+              class="trashicon"
+              style="border: none"
+              @click="deletePeriod(period[0])"
+            />
+          </div>
+        </div>
       </div>
       <div class="last-menstruations box-info">
-        <img :src="require('@/assets/img/ovulation-fer-days.png')" alt="" class="menstruation-image" id="btnOvulationOpen"  @click="showOvulation">
-        
-        
-        
+        <img
+          :src="require('@/assets/img/ovulation-fer-days.png')"
+          alt=""
+          class="menstruation-image"
+          id="btnOvulationOpen"
+          @click="showOvulation"
+        />
+
         <h3>Ovulation and fertile days</h3>
-        <div class="general-ovulation-info" >
-          
-          <img :src="require('@/assets/img/backArrow.png')" alt="" class="back-arrow" id="backArrowOvulation" @click="closeOvulation">
-          <p><b>Date of Ovulation:</b> <br /> <span class="dateOfOvulation">{{ datumOvulacije }}</span> </p>
-        <p><b>Fertile Days:</b></p>
-        <ul class="fertile-days">
-          <li v-for="(item, index) in fertileDaysArray" :key="index">
-            {{ item }}
-          </li>
-        </ul></div>
-        
+        <div class="general-ovulation-info">
+          <img
+            :src="require('@/assets/img/backArrow.png')"
+            alt=""
+            class="back-arrow"
+            id="backArrowOvulation"
+            @click="closeOvulation"
+          />
+          <p>
+            <b>Date of Ovulation:</b> <br />
+            <span class="dateOfOvulation">{{ datumOvulacije }}</span>
+          </p>
+          <p><b>Fertile Days:</b></p>
+          <ul class="fertile-days">
+            <li v-for="(item, index) in fertileDaysArray" :key="index">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -72,7 +130,7 @@
         id="datepicker"
         class="date-of-period"
         v-model="thePeriodDay"
-required
+        required
       />
       <input
         type="number"
@@ -87,13 +145,9 @@ required
 </template>
 
 <script>
-
-
 export default {
   name: "App",
-  components: {
-   
-  },
+  components: {},
   data() {
     return {
       numberOfDays: 30,
@@ -106,25 +160,43 @@ export default {
       fertileDaysArray: [],
       firstFertileDayDate: "",
       lastFertileDayDate: "",
-
     };
   },
   computed: {
     nextMonth() {
-    const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    const currentDate = new Date();
-    const nextMonthIndex = (currentDate.getMonth() + 1) % 12;
-    return months[nextMonthIndex];
-  },
-
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      const currentDate = new Date();
+      const nextMonthIndex = (currentDate.getMonth() + 1) % 12;
+      return months[nextMonthIndex];
+    },
 
     currentMonth() {
       const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
       ];
       const currentDate = new Date();
       return months[currentDate.getMonth()];
@@ -144,134 +216,100 @@ export default {
   },
 
   methods: {
-
     formatDate(dateString) {
-      const [year, month, day] = dateString.split('-');
+      const [year, month, day] = dateString.split("-");
       return `${day}.${month}.${year}`;
     },
 
-      showPreviousMonth(){
-        const chevronFront=document.getElementById("chevronFront");
-        const currentMonth=document.getElementById("current-month");
-        const nextMonth=document.getElementById("next-month");
-        const chevronBack=document.getElementById("chevronBack")
-        const containerNextMonth=document.getElementById("calendar1");
-        const containerCurrentMonth=document.getElementById("calendar");
+    showPreviousMonth() {
+      const chevronFront = document.getElementById("chevronFront");
+      const currentMonth = document.getElementById("current-month");
+      const nextMonth = document.getElementById("next-month");
+      const chevronBack = document.getElementById("chevronBack");
+      const containerNextMonth = document.getElementById("calendar1");
+      const containerCurrentMonth = document.getElementById("calendar");
 
-       
-
-          chevronFront.style.display="block";
-          currentMonth.style.display="grid";
-          nextMonth.style.display="none";
-          chevronBack.style.display="none";
-          containerCurrentMonth.style.display="grid";
-          containerNextMonth.style.display="none"
-
-        
-
-
-      },
-
-    showNextMonth(){
-      const chevronFront=document.getElementById("chevronFront");
-      const currentMonth=document.getElementById("current-month");
-      const nextMonth=document.getElementById("next-month");
-      const chevronBack=document.getElementById("chevronBack")
-      const containerNextMonth=document.getElementById("calendar1");
-      const containerCurrentMonth=document.getElementById("calendar");
-
-      
-        chevronFront.style.display="none";
-        currentMonth.style.display="none";
-        nextMonth.style.display="flex";
-        chevronBack.style.display="block";
-        containerCurrentMonth.style.display="none";
-        containerNextMonth.style.display="grid"
-      
-
+      chevronFront.style.display = "block";
+      currentMonth.style.display = "grid";
+      nextMonth.style.display = "none";
+      chevronBack.style.display = "none";
+      containerCurrentMonth.style.display = "grid";
+      containerNextMonth.style.display = "none";
     },
 
+    showNextMonth() {
+      const chevronFront = document.getElementById("chevronFront");
+      const currentMonth = document.getElementById("current-month");
+      const nextMonth = document.getElementById("next-month");
+      const chevronBack = document.getElementById("chevronBack");
+      const containerNextMonth = document.getElementById("calendar1");
+      const containerCurrentMonth = document.getElementById("calendar");
 
-    
-
+      chevronFront.style.display = "none";
+      currentMonth.style.display = "none";
+      nextMonth.style.display = "flex";
+      chevronBack.style.display = "block";
+      containerCurrentMonth.style.display = "none";
+      containerNextMonth.style.display = "grid";
+    },
 
     // današnji datum
-    currentDate(){
-      let todaysDate=newDate();
-      let day = String(today.getDate()).padStart(2, '0'); // Get day and pad with leading zero if necessary
-let month = String(today.getMonth() + 1).padStart(2, '0'); // Get month (0-indexed) and pad with leading zero if necessary
-let year = String(today.getFullYear()).slice(-2); // Get last two digits of the year
+    currentDate() {
+      let todaysDate = newDate();
+      let day = String(today.getDate()).padStart(2, "0"); // Get day and pad with leading zero if necessary
+      let month = String(today.getMonth() + 1).padStart(2, "0"); // Get month (0-indexed) and pad with leading zero if necessary
+      let year = String(today.getFullYear()).slice(-2); // Get last two digits of the year
 
-let formattedDate = `${day}.${month}.${year}`;
-return formattedDate;
-
+      let formattedDate = `${day}.${month}.${year}`;
+      return formattedDate;
     },
     //open Menstruation info
 
-    openMenstruationInfo(){
+    openMenstruationInfo() {
+      const infoMenstruation = document.getElementsByClassName(
+        "menstruation-data-info"
+      )[0];
+      const imageOpenInfo = document.getElementById("btnOpenM");
+      //backArrowM
 
-      const infoMenstruation=document.getElementsByClassName("menstruation-data-info")[0];
-      const imageOpenInfo=document.getElementById("btnOpenM")
-//backArrowM
-      
-        infoMenstruation.style.display="block";
-        imageOpenInfo.style.display="none"
-      
-
-
+      infoMenstruation.style.display = "block";
+      imageOpenInfo.style.display = "none";
     },
 
-closeMenstruationInfo(){
-  const infoMenstruation=document.getElementsByClassName("menstruation-data-info")[0];
-      const imageOpenInfo=document.getElementById("btnOpenM");
-      const arrowBackM=document.getElementById("backArrowM");
+    closeMenstruationInfo() {
+      const infoMenstruation = document.getElementsByClassName(
+        "menstruation-data-info"
+      )[0];
+      const imageOpenInfo = document.getElementById("btnOpenM");
+      const arrowBackM = document.getElementById("backArrowM");
 
-
-
-  infoMenstruation.style.display="none";
-  imageOpenInfo.style.display="block";
-
-
-
-
-
-},
+      infoMenstruation.style.display = "none";
+      imageOpenInfo.style.display = "block";
+    },
 
     // SHOW Ovulation info
 
-    showOvulation(){
+    showOvulation() {
+      const btnIconOvulationOpen = document.getElementById("btnOvulationOpen");
+      const getInfoOvulation = document.getElementsByClassName(
+        "general-ovulation-info"
+      )[0];
 
-      const btnIconOvulationOpen=document.getElementById("btnOvulationOpen");
-      const getInfoOvulation=document.getElementsByClassName("general-ovulation-info")[0];
-
-    
-      getInfoOvulation.style.display="block";
-      btnIconOvulationOpen.style.display="none";
-    
-
-
-
-
-
-
+      getInfoOvulation.style.display = "block";
+      btnIconOvulationOpen.style.display = "none";
     },
 
-// close Ovulation info
-    closeOvulation(){
-  const closeOvulation=document.getElementById("backArrowOvulation");
-  const btnIconOvulationOpen=document.getElementById("btnOvulationOpen");
-  const getInfoOvulation=document.getElementsByClassName("general-ovulation-info")[0];
-  
- 
-    getInfoOvulation.style.display="none";
-    btnIconOvulationOpen.style.display="flex";
-    
+    // close Ovulation info
+    closeOvulation() {
+      const closeOvulation = document.getElementById("backArrowOvulation");
+      const btnIconOvulationOpen = document.getElementById("btnOvulationOpen");
+      const getInfoOvulation = document.getElementsByClassName(
+        "general-ovulation-info"
+      )[0];
 
-
-  
-
-},
-
+      getInfoOvulation.style.display = "none";
+      btnIconOvulationOpen.style.display = "flex";
+    },
 
     getDaysPassed() {
       function daysPassedSince(startDate) {
@@ -286,27 +324,27 @@ closeMenstruationInfo(){
       const startDate = datumMenge; // Change this to your specific start date
       let daysPassed = daysPassedSince(startDate);
 
-      
-
-      return daysPassed-1 ;
+      return daysPassed - 1;
     },
 
     displayPeriodInfo() {
       // getting the days of the month into the array
-     const elements = document.getElementsByClassName('calendar-day');
+      const elements = document.getElementsByClassName("calendar-day");
       const arrayEl = Array.from(elements);
       // Now we will try to get the date of menstruation month and day
       let danasnjidatum = new Date();
       // mjesec i dan ovog mjeseca
 
-      let formattedDate = `${danasnjidatum.getDate() < 10 ? '0' : ''}${danasnjidatum.getDate()}. ${danasnjidatum.getMonth() + 1 < 10 ? '0' : ''}${danasnjidatum.getMonth() + 1}. ${danasnjidatum.getFullYear()}.`;
+      let formattedDate = `${
+        danasnjidatum.getDate() < 10 ? "0" : ""
+      }${danasnjidatum.getDate()}. ${
+        danasnjidatum.getMonth() + 1 < 10 ? "0" : ""
+      }${danasnjidatum.getMonth() + 1}. ${danasnjidatum.getFullYear()}.`;
 
-
-      
       const circleDisplay = document.getElementsByClassName("center-circle")[0];
       const calendarDay = document.getElementsByClassName("calendar-day");
-      
-      console.log("Današnji datum",danasnjidatum.toDateString());
+
+      console.log("Današnji datum", danasnjidatum.toDateString());
       if (danasnjidatum.toDateString() == this.dateForPeriodValue) {
         circleDisplay.style.backgroundColor = "#FF1F49";
       } else if (danasnjidatum.toDateString() == this.datumOvulacije) {
@@ -369,26 +407,34 @@ closeMenstruationInfo(){
 
       console.log(this.fertileDaysArray);
     },
+    deletePeriod(primaryKey) {
+      let arrayOfPeriods = JSON.parse(localStorage.getItem("arrayOfPeriods"));
+      for (let i = 0; i < arrayOfPeriods.length; i++) {
+        if (arrayOfPeriods[i][0] === primaryKey) {
+          arrayOfPeriods.splice(i, 1);
+          break;
+        }
+      }
+      localStorage.setItem("arrayOfPeriods", JSON.stringify(arrayOfPeriods));
+      this.displayMenstrualDates();
+    },
 
     displayMenstrualDates() {
       let arrayTempM = JSON.parse(localStorage.getItem("arrayOfPeriods"));
 
       this.arrayOfPeriods = arrayTempM.reverse();
-      
     },
 
     savePeriod() {
-
       const periodInfo = [this.thePeriodDay, this.numberOfDays];
-      console.log("date",this.thePeriodDay);
-      console.log( "smth",this.numberOfDays);
+      console.log("date", this.thePeriodDay);
+      console.log("smth", this.numberOfDays);
 
-      if(this.thePeriodDay== "" ||this.numberOfDays== "" ){
+      if (this.thePeriodDay == "" || this.numberOfDays == "") {
         alert("Error! You did not enter complete period info!");
         return;
       }
 
-      
       this.fertileDaysArray = [];
       let arrayOfPeriods = JSON.parse(localStorage.getItem("arrayOfPeriods"));
       if (arrayOfPeriods == null) {
@@ -435,17 +481,14 @@ closeMenstruationInfo(){
     openModalPeriod() {
       const modalInput = document.getElementById("myModal");
       const logPeriod = document.getElementById("log-p");
-      
-        modalInput.style.display = "block";
-      
+
+      modalInput.style.display = "block";
     },
 
     closeModalPeriod() {
       const modalInput = document.getElementById("myModal");
 
-      
-        modalInput.style.display = "none";
-      
+      modalInput.style.display = "none";
     },
 
     getCalendarDays() {
@@ -457,33 +500,33 @@ closeMenstruationInfo(){
       const calendarContainer = document.getElementById("calendar");
 
       function generateCalendar(containerId, monthOffset) {
-  const currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth() + monthOffset);
+        const currentDate = new Date();
+        currentDate.setMonth(currentDate.getMonth() + monthOffset);
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const calendarContainer = document.getElementById(containerId);
+        const calendarContainer = document.getElementById(containerId);
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const calendarDay = document.createElement("div");
-    calendarDay.classList.add("calendar-day");
-    calendarDay.textContent = `${day} (${dayNames[new Date(year, month, day).getDay()]})`;
+        for (let day = 1; day <= daysInMonth; day++) {
+          const calendarDay = document.createElement("div");
+          calendarDay.classList.add("calendar-day");
+          calendarDay.textContent = `${day} (${
+            dayNames[new Date(year, month, day).getDay()]
+          })`;
 
-    if (day === (new Date()).getDate() && monthOffset === 0) {
-      calendarDay.classList.add("current-day");
-    }
+          if (day === new Date().getDate() && monthOffset === 0) {
+            calendarDay.classList.add("current-day");
+          }
 
-    calendarContainer.appendChild(calendarDay);
-  }
-}
+          calendarContainer.appendChild(calendarDay);
+        }
+      }
 
-generateCalendar("calendar", 0); // Generate current month's calendar
-generateCalendar("calendar1", 1); // Generate next month's calendar
-
-
+      generateCalendar("calendar", 0); // Generate current month's calendar
+      generateCalendar("calendar1", 1); // Generate next month's calendar
     },
   },
 };
@@ -559,10 +602,11 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
   color: #fb627e;
   margin-bottom: 10px;
 }
-#calendar1,.calendar-container {
+#calendar1,
+.calendar-container {
   max-width: 1440px;
   display: grid;
-  grid-template-columns: repeat(7,1fr);
+  grid-template-columns: repeat(7, 1fr);
   width: 60%;
   justify-content: center;
   gap: 10px;
@@ -579,7 +623,7 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
   width: 50px;
   height: 50px;
   text-align: center;
-  font-size:19px;
+  font-size: 19px;
   border-radius: 50%;
   cursor: pointer;
   padding: 5px;
@@ -590,8 +634,6 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
   color: white;
   background-color: #fb627e;
 }
-
-
 
 .log-period {
   background-color: transparent;
@@ -669,188 +711,191 @@ generateCalendar("calendar1", 1); // Generate next month's calendar
 
 #calendar1 {
   display: none;
-  
 }
-.spremljene-menstruacije ul li:first-child {
+.spremljene-menstruacije div p:first-child {
   text-align: center;
 }
 .fertile-days {
   color: white;
 
   padding: 5px;
-  
 }
 .fertile-days,
 .spremljene-menstruacije {
   list-style: none;
 }
-.spremljene-menstruacije li:nth-child(n + 6) {
+.spremljene-menstruacije p:nth-child(n + 6) {
   display: none;
 }
-
 
 .information-menstruation h3 {
   text-align: center;
 }
 .information-menstruation p {
   text-align: center;
-  font-size: 40px;
+  font-size: 28px;
   color: white;
 }
 .dateForPeriod {
   color: white;
 }
-.spremljene-menstruacije li:first-child{
+.spremljene-menstruacije li:first-child {
   font-size: 20px;
   text-decoration: underline;
   color: #2c3e50;
 }
-.spremljene-menstruacije li{
+.spremljene-menstruacije li {
   color: white;
   padding: 5px;
 }
-.dateOfOvulation{
+.dateOfOvulation {
   color: white;
 }
 
-.current-month-title{
+.current-month-title {
   display: flex;
-    background-color: #fb627e;
-    color: white;
-    height: 50px;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    gap: 1em;
+  background-color: #fb627e;
+  color: white;
+  height: 50px;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 1em;
 }
 
-.current-month-title img{
+.current-month-title img {
   width: 20px;
   height: 20px;
 }
-.current-month-title p{
+.current-month-title p {
   font-size: 28px;
 }
 
-.menstruation-image,.ovulation-image{
+.menstruation-image,
+.ovulation-image {
   width: 60%;
   margin: auto;
   cursor: pointer;
 }
 
-.back-arrow{
+.back-arrow {
   width: 50px;
   cursor: pointer;
 }
-.menstruation-data-info{
-display: none;
-}
-
-.general-ovulation-info{
-display: none;
-}
-
-.chevronBack{
+.menstruation-data-info {
   display: none;
 }
 
-.next-month{
+.general-ovulation-info {
   display: none;
 }
 
+.chevronBack {
+  display: none;
+}
+
+.next-month {
+  display: none;
+}
 
 /*Media Queries*/
-@media(max-width:800px){
-  .center-circle{
+@media (max-width: 800px) {
+  .center-circle {
     width: 400px;
     height: 400px;
-
   }
-  .calendar-day{
+  .calendar-day {
     width: 30px;
     height: 30px;
-    
+
     font-size: 14px;
   }
-  .day-of-month{
-    font-size: 32px;
+  .day-of-month {
+    font-size: 28px;
   }
-  .information-boxes{
+  .information-boxes {
     grid-template-columns: 1fr;
   }
 }
 
-@media(max-width:600px){
-  #calendar1, .calendar-container{
+@media (max-width: 600px) {
+  #calendar1,
+  .calendar-container {
     width: 100%;
     border-radius: 0;
     overflow: hidden;
   }
-  .container-layout{
-    gap:0;
+  .container-layout {
+    gap: 0;
   }
 }
 
-@media(max-width: 480px){
-  .center-circle{
+@media (max-width: 480px) {
+  .center-circle {
     width: 350px;
     height: 350px;
   }
-  #calendar1, .calendar-container{
-    gap:2px;
-    
-    
+  #calendar1,
+  .calendar-container {
+    gap: 2px;
   }
-  .calendar-day{
+  .calendar-day {
     font-size: 12px;
   }
 }
 
-@media(max-width:380px){
-  .center-circle{
+@media (max-width: 380px) {
+  .center-circle {
     width: 320px;
     height: 320px;
-
   }
-  #calendar1, .calendar-container{
-    gap:0px;
-  border-radius: 0;  
- 
-  
+  #calendar1,
+  .calendar-container {
+    gap: 0px;
+    border-radius: 0;
   }
-  .center-circle{
+  .center-circle {
     width: 280px;
     height: 280px;
   }
-  
 }
 
-@media(max-width:280px){
-  .center-circle{
+@media (max-width: 280px) {
+  .center-circle {
     width: 200px;
     height: 200px;
   }
-  .box-info{
+  .box-info {
     width: 150px;
     height: 1500px;
   }
-  #calendar1, .calendar-container{
-   
-  grid-template-columns: repeat(6,1fr);  
-    
+  #calendar1,
+  .calendar-container {
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
-.dateForPeriod{
-  font-size: 32px;
+.dateForPeriod {
+  font-size: 28px;
 }
-.information-menstruation p{
+.information-menstruation p {
   margin: 0;
 }
 
-.information-menstruation h3{
+.information-menstruation h3 {
   margin: 0;
 }
 
+.trashicon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.spremljene-menstruacije {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  align-items: center;
+}
 </style>
