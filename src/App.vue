@@ -828,6 +828,7 @@ export default {
     width: 100%;
     border-radius: 0;
     overflow: hidden;
+    padding: 0;
   }
   .container-layout {
     gap: 0;
