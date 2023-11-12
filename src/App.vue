@@ -612,10 +612,14 @@ export default {
   margin: auto;
   margin-bottom: 2em;
   background-color: whitesmoke;
-  height: fit-content;
+  justify-items: center;
   align-content: center;
   border-radius: 20px;
   padding: 10px;
+}
+
+.calendar-container {
+  height: 400px;
 }
 
 .calendar-day {
@@ -828,6 +832,9 @@ export default {
   .container-layout {
     gap: 0;
   }
+  .calendar-container {
+    height: 300px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -841,6 +848,9 @@ export default {
   }
   .calendar-day {
     font-size: 12px;
+  }
+  .calendar-container {
+    height: 250px;
   }
 }
 
