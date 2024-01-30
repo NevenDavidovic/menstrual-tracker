@@ -1,1 +1,3 @@
--provjeri prijestupnu godinu->tu si nesto zajebao
+1. Nicer Timeline
+2. Bettter transitions
+3. Classes display property
