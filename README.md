@@ -1,13 +1,16 @@
 # menstrual-tracker
+![image](https://github.com/user-attachments/assets/b2f2d918-07fe-4a69-99ac-a279d2f7c16c)
 
 
 ### Features:
-- tracking your dates for menstrual cicle.
-- saving the dates to local storage of the browser
+- tracking your dates for your menstrual cycle.
+- save the dates to the local storage of the browser
 - mobile friendly
 - calculating ovulation and fertile days
-- tracking the the time between periods
+- tracking the time between periods
 - changing colors of the circle depending on menstruation, ovulation, fertile days, other
+- responsive design
+- connected weather API for current weather and temperature 
 
 
 ## Project setup
