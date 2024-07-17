@@ -13,6 +13,9 @@ Active link of the App: https://menstrual-tracker.vercel.app/
 - responsive design
 - connected weather API for current weather and temperature 
 
+![WhatsApp Slika 2024-07-17 u 21 40 43_fda7928c](https://github.com/user-attachments/assets/00b4eecc-0018-4c80-ad01-0afd6a018027)
+
+
 
 ## Project setup
 ```
