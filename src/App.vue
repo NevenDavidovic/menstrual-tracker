@@ -803,8 +803,9 @@ export default {
     width: 400px;
     height: 400px;
   }
-  .box {
-    border-radius: 0;
+  .box,
+  .box:before {
+    border-radius: 0 !important;
   }
   .calendar-day {
     width: 38px;
