@@ -9,16 +9,6 @@
 - tracking the the time between periods
 - changing colors of the circle depending on menstruation, ovulation, fertile days, other
 
-### Figma file:
-- https://www.figma.com/file/Prkg66Ig5D2qyaNcCE2nWz/Untitled?type=design&node-id=0%3A1&mode=design&t=1Evosq5YiCTKPeah-1
-
-### Screenshots
-
-![image](https://github.com/NevenDavidovic/menstrual-tracker/assets/57957655/e1328253-2243-4dbf-9cf8-df1f953f8f7c)
-![image](https://github.com/NevenDavidovic/menstrual-tracker/assets/57957655/e00dd0e2-27c8-4e5c-baed-f59c97a67b03)
-
-
-
 
 ## Project setup
 ```
