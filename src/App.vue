@@ -848,9 +848,21 @@ export default {
   }
   .calendar-day {
     font-size: 12px;
+    padding: 4px;
   }
   .calendar-container {
     height: 250px;
+  }
+  .box-info {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .information-boxes {
+    gap: 20px;
+  }
+  .color-pallete {
+    grid-template-columns: 1fr !important;
+    width: unset !important;
   }
 }
 
@@ -877,7 +889,7 @@ export default {
   }
   .box-info {
     width: 150px;
-    height: 1500px;
+    height: 150px;
   }
   #calendar1,
   .calendar-container {
