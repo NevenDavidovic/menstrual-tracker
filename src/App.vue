@@ -524,7 +524,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
   margin-top: 0;
   overflow: hidden;
 }
@@ -624,7 +624,8 @@ export default {
 }
 
 .calendar-container {
-  height: 400px;
+  height: fit content;
+  padding: 40px;
 }
 
 .calendar-day {
@@ -675,6 +676,7 @@ export default {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
   padding-top: 60px;
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
@@ -838,6 +840,9 @@ export default {
 }
 
 @media (max-width: 480px) {
+  #datepicker {
+    width: 83%;
+  }
   .center-circle {
     width: 350px;
     height: 350px;
@@ -864,6 +869,14 @@ export default {
     grid-template-columns: 1fr !important;
     width: unset !important;
   }
+  .information-menstruation-2 {
+    flex-direction: column;
+  }
+  .color-item h2 {
+    color: black !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+  }
 }
 
 @media (max-width: 380px) {
@@ -875,10 +888,18 @@ export default {
   .calendar-container {
     gap: 0px;
     border-radius: 0;
+    display: flex;
+    flex-wrap: wrap;
   }
   .center-circle {
     width: 280px;
     height: 280px;
+  }
+}
+@media (max-width: 300px) {
+  .center-circle {
+    width: 230px;
+    height: 230px;
   }
 }
 
@@ -894,6 +915,11 @@ export default {
   #calendar1,
   .calendar-container {
     grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (max-width: 200px) {
+  body {
+    width: 200vh;
   }
 }
 
